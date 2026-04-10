@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+}
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+nav {
+    background: #555;
+    padding: 10px;
+    text-align: center;
+}
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+section {
+    padding: 20px;
+}
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+.project {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #333;
+    color: white;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Ananya B</h1>
+    <p>MCA Student | Python Developer | Full Stack Learner</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<section id="about">
+<div class="container">
+    <h2>About Me</h2>
+    <p>I am an MCA student with strong interest in Python, Full Stack Development, and AI-based projects. I have worked on projects like Honey Antimicrobial Prediction and Road Condition Dashboard.</p>
+</div>
+</section>
+
+<section id="skills">
+<div class="container">
+    <h2>Skills</h2>
+    <ul>
+        <li>Python, SQL</li>
+        <li>HTML, CSS, JavaScript</li>
+        <li>Flask, REST APIs</li>
+        <li>Machine Learning (Scikit-learn, Pandas, NumPy)</li>
+        <li>Data Visualization (Matplotlib, Seaborn)</li>
+        <li>Database: Oracle SQL, MySQL</li>
+        <li>Tools: Jupyter Notebook, VS Code</li>
+        <li>Concepts: OOP, Data Processing, Debugging</li>
+        <li>Soft Skills: Problem Solving, Communication, Team Collaboration</li>
+    </ul>
+</div>
+</section>
+
+<section id="projects">
+<div class="container">
+    <h2>Projects</h2>
+    
+    <div class="project">
+        <h3>Honey Antimicrobial Prediction</h3>
+        <p>Machine learning based project to predict antimicrobial properties and sugar quality of honey.</p>
+    </div>
+
+    <div class="project">
+        <h3>Road Vistia</h3>
+        <p>A road condition dashboard focusing on Puttur region with mapping and alerts.</p>
+    </div>
+
+    <div class="project">
+        <h3>AI News Category Predictor</h3>
+        <p>Web app with speech-to-text and text-to-speech features for news classification.</p>
+    </div>
+
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+    <h2>Contact</h2>
+    <p>Email: ananyabaleguli@gmail.com</p>
+    <p>Phone: +91-8722739369</p>
+    <p>LinkedIn: linkedin.com/in/yourprofile</p>
+</div>
+</section>
+
+
+
+<script>
+// Simple animation effect
+const sections = document.querySelectorAll("section");
+window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+        const top = window.scrollY;
+        const offset = sec.offsetTop - 200;
+        const height = sec.offsetHeight;
+        if(top >= offset && top < offset + height) {
+            sec.style.transform = "translateY(0px)";
+            sec.style.opacity = "1";
+        }
+    });
+});
+
+// Resume download button
+const contactSection = document.getElementById("contact");
+const btn = document.createElement("button");
+btn.innerText = "Download Resume";
+btn.style.padding = "10px";
+btn.style.marginTop = "10px";
+btn.onclick = () => {
+    window.open("resume.pdf"); // replace with your resume file
+};
+contactSection.appendChild(btn);
+</script>
+
+</body>
+</html>
