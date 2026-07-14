@@ -33,6 +33,8 @@
             --radius: 16px;
             --radius-sm: 10px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* sidebar width */
+            --sidebar-width: 72px;
         }
 
         html {
@@ -44,7 +46,7 @@
             background: var(--bg-primary);
             color: var(--text);
             line-height: 1.6;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.5rem 2rem calc(1.5rem + var(--sidebar-width) + 24px);
             min-height: 100vh;
             background-image:
                 radial-gradient(ellipse at 20% 50%, rgba(167, 139, 250, 0.08) 0%, transparent 60%),
@@ -113,6 +115,119 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            position: fixed;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            width: var(--sidebar-width);
+            background: var(--surface);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50px;
+            padding: 1.2rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+            z-index: 1000;
+            box-shadow: 0 0 60px rgba(167, 139, 250, 0.08);
+            transition: var(--transition);
+        }
+        .sidebar:hover {
+            border-color: rgba(167, 139, 250, 0.15);
+            box-shadow: 0 0 80px rgba(167, 139, 250, 0.12);
+        }
+
+        .sidebar .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: var(--text-light);
+            transition: var(--transition);
+            font-size: 0.55rem;
+            font-weight: 500;
+            gap: 0.1rem;
+            position: relative;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            padding: 0;
+        }
+        .sidebar .nav-item i {
+            font-size: 1.15rem;
+            transition: var(--transition);
+        }
+        .sidebar .nav-item span {
+            font-size: 0.5rem;
+            letter-spacing: 0.03em;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        .sidebar .nav-item:hover {
+            color: var(--text);
+            background: rgba(167, 139, 250, 0.1);
+        }
+        .sidebar .nav-item:hover i {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        .sidebar .nav-item.active {
+            color: #fff;
+            background: rgba(167, 139, 250, 0.18);
+        }
+        .sidebar .nav-item.active i {
+            color: var(--primary);
+            text-shadow: 0 0 30px rgba(167, 139, 250, 0.3);
+        }
+        .sidebar .nav-item .tooltip {
+            position: absolute;
+            left: calc(100% + 14px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary);
+            color: var(--text);
+            padding: 0.3rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.02em;
+        }
+        .sidebar .nav-item .tooltip::before {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 6px solid transparent;
+            border-right-color: var(--bg-secondary);
+        }
+        .sidebar .nav-item:hover .tooltip {
+            opacity: 1;
+            transform: translateY(-50%) translateX(4px);
+        }
+
+        /* sidebar divider */
+        .sidebar .divider {
+            width: 28px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 0.1rem 0;
         }
 
         /* ─── header / hero ─── */
@@ -305,6 +420,7 @@
         /* ─── section ─── */
         section {
             margin-bottom: 3.5rem;
+            scroll-margin-top: 2rem;
         }
 
         .section-header {
@@ -668,7 +784,7 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 1rem;
+                padding: 1rem 1rem 1rem calc(1rem + var(--sidebar-width) + 12px);
             }
             .hero {
                 padding: 2rem 1.5rem;
@@ -726,9 +842,40 @@
                 left: 50% !important;
                 transform: translateX(-50%) !important;
             }
+
+            /* sidebar smaller on mobile */
+            .sidebar {
+                width: 56px;
+                left: 10px;
+                padding: 0.8rem 0.3rem;
+                border-radius: 40px;
+            }
+            .sidebar .nav-item {
+                width: 40px;
+                height: 40px;
+                font-size: 0.45rem;
+            }
+            .sidebar .nav-item i {
+                font-size: 0.95rem;
+            }
+            .sidebar .nav-item span {
+                display: none;
+            }
+            .sidebar .nav-item .tooltip {
+                display: none;
+            }
+            .sidebar .divider {
+                width: 20px;
+            }
+            :root {
+                --sidebar-width: 56px;
+            }
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 0.75rem 0.75rem 0.75rem calc(0.75rem + var(--sidebar-width) + 8px);
+            }
             .skills-grid {
                 grid-template-columns: 1fr;
             }
@@ -747,6 +894,26 @@
             }
             .timeline-item {
                 padding: 1.2rem 1.5rem;
+            }
+            .sidebar {
+                width: 46px;
+                left: 6px;
+                padding: 0.6rem 0.2rem;
+                border-radius: 30px;
+            }
+            .sidebar .nav-item {
+                width: 34px;
+                height: 34px;
+                font-size: 0.4rem;
+            }
+            .sidebar .nav-item i {
+                font-size: 0.8rem;
+            }
+            .sidebar .divider {
+                width: 16px;
+            }
+            :root {
+                --sidebar-width: 46px;
             }
         }
 
@@ -783,8 +950,11 @@
         @media print {
             body {
                 background: #fff !important;
-                padding: 0.5in;
+                padding: 0.5in !important;
                 color: #000;
+            }
+            .sidebar {
+                display: none !important;
             }
             .hero,
             .summary-card,
@@ -821,15 +991,56 @@
     </style>
 </head>
 <body>
+
+    <!-- ═══ SIDEBAR NAVIGATION ═══ -->
+    <nav class="sidebar" aria-label="Section Navigation">
+        <button class="nav-item active" data-target="home" aria-label="Home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+            <span class="tooltip">Home</span>
+        </button>
+        <div class="divider"></div>
+        <button class="nav-item" data-target="summary" aria-label="Summary">
+            <i class="fas fa-user"></i>
+            <span>About</span>
+            <span class="tooltip">Summary</span>
+        </button>
+        <button class="nav-item" data-target="skills" aria-label="Skills">
+            <i class="fas fa-code"></i>
+            <span>Skills</span>
+            <span class="tooltip">Skills</span>
+        </button>
+        <button class="nav-item" data-target="projects" aria-label="Projects">
+            <i class="fas fa-folder-open"></i>
+            <span>Projects</span>
+            <span class="tooltip">Projects</span>
+        </button>
+        <button class="nav-item" data-target="experience" aria-label="Experience">
+            <i class="fas fa-briefcase"></i>
+            <span>Work</span>
+            <span class="tooltip">Experience</span>
+        </button>
+        <button class="nav-item" data-target="education" aria-label="Education">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Edu</span>
+            <span class="tooltip">Education</span>
+        </button>
+        <button class="nav-item" data-target="certifications" aria-label="Certifications">
+            <i class="fas fa-certificate"></i>
+            <span>Cert</span>
+            <span class="tooltip">Certifications</span>
+        </button>
+    </nav>
+
     <div class="container">
 
         <!-- ═══ HERO ═══ -->
-        <header class="hero fade-in">
+        <header id="home" class="hero fade-in">
             <div class="hero-content">
                 <!-- <div class="badge"><i class="fas fa-code"></i> MCA Graduate · Developer</div> -->
                 <h1>Ananya <span>B</span></h1>
                 <p class="tagline">
-                    MCA Graduate 
+                    MCA Graduate
                 </p>
                 <div class="hero-contact">
                     <a href="mailto:ananyabaleguli@gmail.com"><i class="fas fa-envelope"></i> ananyabaleguli@gmail.com</a>
@@ -845,7 +1056,7 @@
         </header>
 
         <!-- ═══ SUMMARY ═══ -->
-        <section class="summary-card fade-in">
+        <section id="summary" class="summary-card fade-in">
             <p>
                 <i style="color:var(--primary);margin-right:0.5rem;opacity:0.6;"></i>
                 MCA graduate with strong skills in Python, SQL, Django, and Machine Learning. Hands-on experience in
@@ -856,7 +1067,7 @@
         </section>
 
         <!-- ═══ SKILLS — 3 columns ═══ -->
-        <section class="fade-in">
+        <section id="skills" class="fade-in">
             <div class="section-header">
                 <h2>Skills</h2>
             </div>
@@ -889,7 +1100,7 @@
         </section>
 
         <!-- ═══ PROJECTS — 2 columns ═══ -->
-        <section class="fade-in">
+        <section id="projects" class="fade-in">
             <div class="section-header">
                 <h2>Projects</h2>
             </div>
@@ -946,7 +1157,7 @@
         </section>
 
         <!-- ═══ EXPERIENCE ═══ -->
-        <section class="fade-in">
+        <section id="experience" class="fade-in">
             <div class="section-header">
                 <h2>Work Experience</h2>
             </div>
@@ -967,7 +1178,7 @@
         </section>
 
         <!-- ═══ EDUCATION ═══ -->
-        <section class="fade-in">
+        <section id="education" class="fade-in">
             <div class="section-header">
                 <h2>Education</h2>
             </div>
@@ -988,7 +1199,7 @@
         </section>
 
         <!-- ═══ CERTIFICATIONS ═══ -->
-        <section class="fade-in">
+        <section id="certifications" class="fade-in">
             <div class="section-header">
                 <h2>Certifications</h2>
             </div>
@@ -1000,16 +1211,16 @@
                 <span><i class="fas fa-trophy"></i> Project Omega 2025 — 24h National Level Hackathon</span>
             </div>
         </section>
-        
+
 
         <!-- ═══ FOOTER ═══ -->
         <footer class="footer">
             <div class="hero-contact">
-                    <a href="mailto:ananyabaleguli@gmail.com"><i class="fas fa-envelope"></i> ananyabaleguli@gmail.com</a>
-                    <a href="tel:+918722739369"><i class="fas fa-phone-alt"></i> +91 8722739369</a>
-                    <a href="https://github.com/Ananaya222" target="_blank"><i class="fab fa-github"></i> github.com/Ananaya222</a>
-                    <a href="https://www.linkedin.com/in/ananya-b-33663b348" target="_blank"><i class="fab fa-linkedin-in"></i> linkedin.com/in/ananya-b</a>
-                </div>
+                <a href="mailto:ananyabaleguli@gmail.com"><i class="fas fa-envelope"></i> ananyabaleguli@gmail.com</a>
+                <a href="tel:+918722739369"><i class="fas fa-phone-alt"></i> +91 8722739369</a>
+                <a href="https://github.com/Ananaya222" target="_blank"><i class="fab fa-github"></i> github.com/Ananaya222</a>
+                <a href="https://www.linkedin.com/in/ananya-b-33663b348" target="_blank"><i class="fab fa-linkedin-in"></i> linkedin.com/in/ananya-b</a>
+            </div>
         </footer>
 
     </div>
@@ -1017,10 +1228,64 @@
     <!-- ─── JavaScript ─── -->
     <script>
         (function() {
-            // Smooth fade-in on scroll
-            const fadeEls = document.querySelectorAll('.fade-in');
+            // ─── Smooth sidebar navigation ───
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = {
+                home: document.getElementById('home'),
+                summary: document.getElementById('summary'),
+                skills: document.getElementById('skills'),
+                projects: document.getElementById('projects'),
+                experience: document.getElementById('experience'),
+                education: document.getElementById('education'),
+                certifications: document.getElementById('certifications')
+            };
+
+            // Click handler
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const targetId = this.dataset.target;
+                    const targetEl = sections[targetId];
+                    if (targetEl) {
+                        e.preventDefault();
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Update active state
+                        navItems.forEach(n => n.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // ─── Update active nav item on scroll ───
+            const sectionEntries = Object.entries(sections).map(([id, el]) => ({
+                id,
+                el
+            }));
 
             const observer = new IntersectionObserver((entries) => {
+                let activeId = 'home';
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        if (id && sections[id]) {
+                            activeId = id;
+                        }
+                    }
+                }
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.target === activeId);
+                });
+            }, {
+                rootMargin: '-80px 0px -40% 0px',
+                threshold: 0.1
+            });
+
+            sectionEntries.forEach(({ el }) => {
+                if (el) observer.observe(el);
+            });
+
+            // ─── Fade-in on scroll ───
+            const fadeEls = document.querySelectorAll('.fade-in');
+            const fadeObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.animationPlayState = 'running';
@@ -1032,11 +1297,7 @@
                 el.style.animationPlayState = 'running';
             });
 
-            // Console greeting
-            //console.log('%c✨ Ananya B · Portfolio', 'font-size:1.5rem; font-weight:700; color:#a78bfa;');
-            //console.log('%cBuilt with ♥ using HTML, CSS & JavaScript', 'font-size:1rem; color:#b0b0cc;');
-
-            // Click feedback on skill tags
+            // ─── Click feedback on skill tags ───
             document.querySelectorAll('.skill-tags span').forEach(tag => {
                 tag.addEventListener('click', function() {
                     this.style.transition = '0.15s';
@@ -1047,7 +1308,7 @@
                 });
             });
 
-            // Click feedback on GitHub links
+            // ─── Click feedback on GitHub links ───
             document.querySelectorAll('.github-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     this.style.color = 'var(--primary)';
